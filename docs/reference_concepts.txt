@@ -1,0 +1,30 @@
+Concepts found in the supplied reference ZIP and carried into CropCast AI:
+
+- AdaBoostClassifier
+- DecisionTreeClassifier
+- EDA
+- ExtraTreesClassifier
+- GradientBoostingClassifier
+- LGBMClassifier
+- Lasso
+- LinearRegression
+- LogisticRegression
+- MinMaxScaler
+- RandomForestClassifier
+- Ridge
+- RobustScaler
+- StandardScaler
+- XGBClassifier
+- accuracy_score
+- confusion_matrix
+- encoding
+- f1_score
+- feature engineering
+- mean_squared_error
+- outlier
+- precision_score
+- r2_score
+- recall_score
+- train_test_split
+
+The original employee/attrition domain was adapted to agricultural targets: crop yield and disease risk.

@@ -1,0 +1,5 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}CropCast AI{% endblock %}</title><link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+</head><body><header><div><h1>🌾 CropCast AI</h1><p>AI-Based Crop Yield Prediction & Disease Risk Assessment</p></div><span class="badge">ML PROJECT</span></header>
+<div class="shell"><aside><a href="/">🏠 Dashboard</a><a href="/eda">📊 EDA</a><a href="/preprocessing">🧹 Preprocessing</a><a href="/yield">🌱 Yield Prediction</a><a href="/disease">🦠 Disease Risk</a><a href="/trees">🌳 ML Algorithms</a><a href="/predict">🔮 Farmer Prediction</a></aside>
+<main>{% block content %}{% endblock %}</main></div><footer>CropCast AI • Academic Machine Learning Project</footer></body></html>

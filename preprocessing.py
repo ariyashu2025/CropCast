@@ -1,32 +1,16 @@
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler, LabelEncoder
-
-
-def load_and_preprocess_data(file_path):
-    """
-    Loads dataset, handles missing values, encodes categories,
-    and applies Scalarisation (StandardScaler) necessary for gradient-based and distance-based models.
-    """
-    df = pd.read_csv(file_path)
-    df = df.dropna()
-
-    # Categorical encoding
-    categorical_cols = df.select_dtypes(include=['object']).columns
-    for col in categorical_cols:
-        le = LabelEncoder()
-        df[col] = le.fit_transform(df[col])
-
-    # Splitting features and target
-    target_col = 'Yield' if 'Yield' in df.columns else df.columns[-1]
-    X = df.drop(columns=[target_col])
-    y = df[target_col]
-
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-    # Scalarisation for numerical stability in gradient optimization
-    scaler = StandardScaler()
-    X_train_scaled = scaler.fit_transform(X_train)
-    X_test_scaled = scaler.transform(X_test)
-
-    return X_train_scaled, X_test_scaled, y_train, y_test, X.columns
+from load_data import load_dataset
+from outlier_fix import clip_outliers
+COLUMNS=["Rainfall_mm","Temperature_C","Humidity_pct","Soil_Moisture_pct","Soil_pH","Nitrogen_kg_ha",
+"Phosphorus_kg_ha","Potassium_kg_ha","Area_ha","Fertilizer_kg_ha","Pest_Level_pct","Disease_Severity_pct","NDVI"]
+FEATURES=COLUMNS+["Irrigation","Rainfall_Temperature_Index","NPK_Total","Water_Stress_Index","Plant_Health_Index"]
+def preprocess():
+    df=clip_outliers(load_dataset(),COLUMNS)
+    df["Rainfall_Temperature_Index"]=df["Rainfall_mm"]/(df["Temperature_C"]+1)
+    df["NPK_Total"]=df["Nitrogen_kg_ha"]+df["Phosphorus_kg_ha"]+df["Potassium_kg_ha"]
+    df["Water_Stress_Index"]=(100-df["Soil_Moisture_pct"]).clip(lower=0)
+    df["Plant_Health_Index"]=df["NDVI"]*100-.35*df["Disease_Severity_pct"]
+    df["Irrigation"]=df["Irrigation"].map({"No":0,"Yes":1})
+    df["Disease_Risk"]=df["Disease_Risk"].map({"Low":0,"Medium":1,"High":2})
+    df["Crop_Code"]=df["Crop_Type"].map({c:i for i,c in enumerate(["Rice","Wheat","Maize","Cotton","Groundnut"])})
+    return df

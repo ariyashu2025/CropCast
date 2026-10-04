@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block content %}<h2>🧹 Data Preprocessing</h2><div class="cards"><div><b>{{rows}}</b><span>Rows</span></div><div><b>{{cols}}</b><span>Columns</span></div><div><b>{{missing}}</b><span>Missing</span></div><div><b>{{dup}}</b><span>Duplicates</span></div></div>
+<div class="panel"><h3>1. Cleaning & Outlier Treatment</h3><p>Missing/duplicate checks and IQR-based outlier detection are included.</p><table><tr><th>Yield IQR Metric</th><th>Value</th></tr>{% for k,v in out.items() %}<tr><td>{{k}}</td><td>{{v}}</td></tr>{% endfor %}</table></div>
+<div class="panel"><h3>2. Feature Engineering</h3><p>Rainfall-Temperature Index, NPK Total, Water Stress Index and Plant Health Index.</p></div>
+<div class="panel"><h3>3. Encoding & Scaling</h3><p>Irrigation and disease classes are encoded. StandardScaler is used for regression/classification; MinMaxScaler is provided as a reusable module. Tree algorithms do not require scaling.</p></div>
+<div class="panel"><h3>4. Train-Test Split</h3><p>70% training and 30% testing with stratification for disease classification.</p></div>{% endblock %}

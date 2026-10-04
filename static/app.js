@@ -1,0 +1,1 @@
+console.log("CropCast AI loaded");
